@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Khimar Collection — Premium Prayer Wear</title>
+<meta name="description" content="Premium prayer wear — half khimars and full prayer dresses in soft, breathable fabric. Comfort • Elegance • Modesty.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF6EF; --ivory:#F4EDDF; --beige:#EAE0CC; --sand:#E2D5BC;
+  --ink:#3A2A1C; --ink-soft:#5C4632; --muted:#8A7358;
+  --accent:#A98548; --accent-deep:#8C6D3B;
+  --line:rgba(58,42,28,.14); --card:#FFFDF8;
+  --wa:#4C7A57; --wa-deep:#3E6549;
+  --serif:'Cormorant Garamond', Georgia, serif;
+  --sans:'Jost','Segoe UI',sans-serif;
+  --strip-h:34px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* ============ THE STAGE ============ */
+.stage-scroll{position:relative;height:560vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:linear-gradient(180deg,#FBF7F0 0%,var(--cream) 55%,var(--ivory) 100%);perspective:1200px}
+.rail{position:absolute;left:0;right:0;height:2px;background:var(--ink);opacity:.5;z-index:1}
+.rail::before,.rail::after{content:"";position:absolute;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--ink)}
+.rail::before{left:14px}.rail::after{right:14px}
+.track{position:absolute;inset:0;z-index:2}
+/* --- v3 layers: .pitem (JS: opacity/z-index) > .slot (JS: translate/scale/blur, perspective)
+       > .hook, .tilt (JS: rotateY + drop-shadow) > .sway (CSS: rotateZ sway) > img, .gshadow --- */
+.pitem{position:absolute;left:0;top:0;cursor:pointer;will-change:opacity;-webkit-tap-highlight-color:transparent}
+.slot{position:absolute;left:0;top:0;will-change:transform,filter;perspective:1150px}
+.slot .hook{height:30px;display:flex;justify-content:center;align-items:flex-start;position:relative;z-index:3}
+.slot .hook svg{display:block}
+.tilt{position:relative;z-index:2;will-change:transform,filter}
+.sway{height:100%;transform-origin:50% -30px;animation:sway 4s ease-in-out infinite alternate;will-change:transform}
+.sway img{width:100%;height:100%;object-fit:contain}
+@keyframes sway{from{transform:rotateZ(1.2deg)}to{transform:rotateZ(-1.2deg)}}
+.track .pitem:nth-child(1) .sway{animation-duration:3.6s;animation-delay:-.4s}
+.track .pitem:nth-child(2) .sway{animation-duration:4.3s;animation-delay:-1.7s}
+.track .pitem:nth-child(3) .sway{animation-duration:3.9s;animation-delay:-2.6s}
+.track .pitem:nth-child(4) .sway{animation-duration:4.6s;animation-delay:-1.1s}
+.track .pitem:nth-child(5) .sway{animation-duration:3.5s;animation-delay:-3.1s}
+.track .pitem:nth-child(6) .sway{animation-duration:4.4s;animation-delay:-.8s}
+.track .pitem:nth-child(7) .sway{animation-duration:3.8s;animation-delay:-2.2s}
+.track .pitem:nth-child(8) .sway{animation-duration:4.5s;animation-delay:-1.9s}
+.gshadow{position:absolute;left:50%;bottom:-13px;width:76%;height:30px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(59,42,28,.55) 0%,rgba(59,42,28,0) 68%);filter:blur(5px);transform:translateX(-50%);z-index:1;pointer-events:none;will-change:transform,opacity}
+.stage-brand{position:absolute;top:20px;left:22px;z-index:70;display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:1.18rem;font-weight:600;letter-spacing:.02em;color:var(--ink)}
+.stage-brand svg{width:23px;height:23px;flex:none}
+.stage-ig{position:absolute;top:16px;right:20px;z-index:70;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;color:var(--ink-soft);background:rgba(250,246,239,.6);transition:.3s}
+.stage-ig:hover{border-color:var(--accent);color:var(--accent-deep)}
+.stage-ig svg{width:17px;height:17px}
+.caption{position:absolute;left:50%;z-index:50;width:min(92vw,500px);text-align:center;transform:translateX(-50%) translateY(var(--cy,0px));opacity:0;pointer-events:none}
+.caption .c-name{font-family:var(--sans);font-weight:500;font-size:clamp(.86rem,2.6vw,1.02rem);letter-spacing:.3em;text-transform:uppercase;color:var(--ink)}
+.caption .c-type{margin-top:7px;font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-deep);font-weight:400}
+.caption .c-btn{display:inline-block;margin-top:15px;padding:11px 26px;border:1.5px solid var(--ink);border-radius:999px;font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;font-weight:500;color:var(--ink);background:transparent;transition:.3s}
+.caption .c-btn:hover{background:var(--ink);color:var(--cream)}
+.details{position:absolute;z-index:60;opacity:0;pointer-events:none;--dy:16px}
+.details .d-eyebrow{font-size:.74rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent-deep);font-weight:500}
+.details .d-name{font-family:var(--serif);font-weight:600;font-size:clamp(1.7rem,4.6vw,2.4rem);line-height:1.08;margin-top:8px;color:var(--ink)}
+.details .d-feats{margin-top:12px;font-size:.95rem;color:var(--ink-soft);letter-spacing:.04em}
+.details .d-actions{margin-top:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-wa{display:inline-flex;align-items:center;gap:9px;background:var(--wa);color:#fff;padding:14px 28px;border-radius:999px;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;transition:.3s}
+.btn-wa svg{width:16px;height:16px;flex:none}
+.btn-wa:hover{background:var(--wa-deep)}
+.dm-link{font-size:.9rem;color:var(--ink-soft);border-bottom:1px solid var(--sand);padding-bottom:1px;transition:.3s}
+.dm-link:hover{color:var(--accent-deep);border-color:var(--accent)}
+@media (min-width:821px){
+  .details{right:5vw;top:50%;width:330px;transform:translateY(calc(-50% + var(--dy)))}
+}
+@media (max-width:820px){
+  .details{left:50%;bottom:calc(var(--strip-h) + 14px);width:min(92vw,430px);text-align:center;transform:translateX(-50%) translateY(var(--dy));background:rgba(250,246,239,.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:18px;padding:18px 18px 20px}
+  .details .d-actions{justify-content:center}
+  .details .d-name{font-size:1.55rem}
+  .details .d-feats{font-size:.88rem}
+}
+.scroll-hint{position:absolute;left:50%;bottom:calc(var(--strip-h) + 16px);transform:translateX(-50%);z-index:40;text-align:center;opacity:1}
+.scroll-hint .sh-txt{font-size:.66rem;letter-spacing:.44em;text-transform:uppercase;color:var(--muted);font-weight:400;padding-left:.44em}
+.scroll-hint .sh-line{display:block;width:1.5px;height:38px;margin:8px auto 0;background:var(--accent);transform-origin:top;animation:shline 2.1s ease-in-out infinite}
+@keyframes shline{0%{transform:scaleY(0);opacity:0}35%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1) translateY(10px);opacity:0}}
+
+/* ============ FIXED BOTTOM STRIP ============ */
+.strip{position:fixed;left:0;right:0;bottom:0;height:var(--strip-h);background:var(--ink);color:#D9B36A;overflow:hidden;z-index:200;display:flex;align-items:center}
+.strip-track{display:flex;width:max-content;animation:marq 30s linear infinite}
+.strip-track span{font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;font-weight:400;white-space:nowrap;padding-right:.34em}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ============ BELOW THE STAGE ============ */
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+section.below{padding:92px 0}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
+.rv.in{opacity:1;transform:none}
+.kicker{text-align:center;font-size:.76rem;letter-spacing:.42em;text-transform:uppercase;color:var(--accent-deep);font-weight:500;margin-bottom:14px}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(2.1rem,5.4vw,3.4rem);line-height:1.08;text-align:center;color:var(--ink)}
+h2 em{font-style:italic;font-weight:500;color:var(--accent-deep)}
+.lede{max-width:600px;margin:16px auto 0;text-align:center;color:var(--ink-soft);font-size:1.03rem}
+.rule{width:64px;height:1px;background:var(--accent);margin:24px auto 0;position:relative}
+.rule::after{content:"";position:absolute;left:50%;top:-4px;width:9px;height:9px;margin-left:-5px;background:var(--cream);border:1px solid var(--accent);transform:rotate(45deg)}
+.shop-panels{display:grid;grid-template-columns:1fr 1fr;gap:30px;max-width:1020px;margin:52px auto 0}
+@media (max-width:760px){.shop-panels{grid-template-columns:1fr}}
+.shop-panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 30px 14px}
+.shop-panel h3{font-family:var(--serif);font-size:1.7rem;font-weight:600;line-height:1.1}
+.shop-panel .sp-price{font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;color:var(--accent-deep);font-weight:500;margin:5px 0 8px}
+.shop-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+.shop-row .sr-thumb{height:58px;width:auto;max-width:62px;object-fit:contain;flex:none;filter:drop-shadow(0 6px 8px rgba(59,42,28,.18))}
+.shop-row .sr-name{flex:1;font-size:1rem;color:var(--ink);cursor:pointer;border-bottom:1px solid transparent;transition:.25s;background:none;border-top:none;border-left:none;border-right:none;text-align:left;padding:0;font-family:var(--sans);font-weight:300}
+.shop-row .sr-name:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+.shop-row .sr-right{display:flex;align-items:baseline;gap:14px;flex:none}
+.shop-row .sr-price{color:var(--ink-soft);font-size:.95rem}
+.shop-row .sr-order{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--wa-deep);border-bottom:1px solid rgba(76,122,87,.4);padding-bottom:1px;transition:.25s}
+.shop-row .sr-order:hover{color:var(--wa);border-color:var(--wa)}
+.why{background:var(--ivory);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.feats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1060px;margin:52px auto 0}
+@media (max-width:900px){.feats{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.feats{grid-template-columns:1fr}}
+.feat{text-align:center;padding:32px 18px;background:var(--cream);border:1px solid var(--line);border-radius:18px}
+.feat-icon{width:56px;height:56px;margin:0 auto 15px;border:1px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent-deep)}
+.feat-icon svg{width:25px;height:25px}
+.feat h4{font-family:var(--serif);font-size:1.32rem;font-weight:600;margin-bottom:6px}
+.feat p{font-size:.93rem;color:var(--ink-soft)}
+.story{text-align:center}
+.story .big{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(2rem,6vw,3.3rem);line-height:1.2;color:var(--ink);max-width:800px;margin:0 auto}
+.story .big b{color:var(--accent-deep);font-weight:600}
+.story p{max-width:600px;margin:22px auto 0;color:var(--ink-soft);font-size:1.04rem}
+.story-lotus{width:38px;height:38px;margin:0 auto 24px;color:var(--accent)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:1000px;margin:52px auto 0}
+@media (max-width:820px){.steps{grid-template-columns:1fr;max-width:440px}}
+.step{text-align:center;padding:10px 16px}
+.step-num{font-family:var(--serif);font-style:italic;font-size:3.2rem;line-height:1;color:var(--sand);font-weight:600}
+.step h4{font-family:var(--serif);font-size:1.42rem;font-weight:600;margin:10px 0 6px}
+.step p{font-size:.95rem;color:var(--ink-soft)}
+.step p a{color:var(--accent-deep);border-bottom:1px solid var(--sand)}
+.ig-band{background:linear-gradient(160deg,var(--ivory),var(--beige));border-top:1px solid var(--line);text-align:center}
+.ig-handle{font-family:var(--serif);font-style:italic;font-size:clamp(1.5rem,4.4vw,2.2rem);color:var(--accent-deep)}
+.btn-dark{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:15px 32px;border-radius:999px;background:var(--ink);color:var(--cream);font-size:.84rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:.3s;border:none;cursor:pointer}
+.btn-dark svg{width:16px;height:16px;flex:none}
+.btn-dark:hover{background:var(--accent-deep)}
+footer{background:var(--ink);color:#EDE4D2;padding:70px 0 calc(var(--strip-h) + 30px)}
+.foot-grid{max-width:1100px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr;text-align:center}.foot-brand{justify-content:center}}
+.foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--cream)}
+.foot-brand svg{width:27px;height:27px}
+footer p{font-size:.94rem;color:#CDBFA5}
+.foot-tag{font-family:var(--serif);font-style:italic;font-size:1.04rem;color:#D9C9A8;margin-top:10px}
+footer h5{font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:#A98F66;font-weight:500;margin-bottom:15px}
+.foot-links{list-style:none;font-size:.97rem}
+.foot-links li{margin-bottom:10px}
+.foot-links a{transition:.25s;border-bottom:1px solid transparent}
+.foot-links a:hover{color:#fff;border-color:var(--accent)}
+.foot-bottom{max-width:1100px;margin:50px auto 0;padding:22px 24px 0;border-top:1px solid rgba(250,246,239,.14);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.84rem;color:#A5937A}
+.foot-credit a{color:#D9C9A8;border-bottom:1px solid rgba(217,201,168,.4)}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .strip-track{animation:none}
+  .scroll-hint .sh-line{animation:none}
+  .sway{animation:none}
+  .rv{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= THE STAGE ================= -->
+<div class="stage-scroll" id="stageScroll">
+  <div class="stage" id="stage">
+    <div class="stage-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#A98548" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20c-4 0-7-2.6-7-6.2 2.3.3 4.2 1.3 5.5 3C10.2 14 10.8 11 12 8.6c1.2 2.4 1.8 5.4 1.5 8.2 1.3-1.7 3.2-2.7 5.5-3C19 17.4 16 20 12 20Z"/><path d="M12 20v3M5 23h14" stroke-width="1.1"/></svg>
+      <span>The Khimar Collection</span>
+    </div>
+    <a class="stage-ig" href="https://www.instagram.com/the_khimar_collection" target="_blank" rel="noopener" aria-label="The Khimar Collection on Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+    </a>
+
+    <div class="rail" id="rail"></div>
+
+    <div class="track" id="track">
+      <div class="pitem" data-i="0" role="button" tabindex="0" aria-label="Leopard Grace Half Khimar">
+        <div class="slot">
+          <div class="hook"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#5C4632" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 30 V16"/><path d="M15 16c0-4.6 6.8-4.9 6.8-9.2a4.3 4.3 0 1 0-8.3-1.6"/></svg></div>
+          <div class="tilt"><div class="sway"><img src="cutouts/web/half-leopard.webp" alt="Leopard Grace Half Khimar" loading="eager"></div></div>
+          <div class="gshadow"></div>
+        </div>
+      </div>
+      <div class="pitem" data-i="1" role="button" tabindex="0" aria-label="Blush Blue Floral Half Khimar">
+        <div class="slot">
+          <div class="hook"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#5C4632" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 30 V16"/><path d="M15 16c0-4.6 6.8-4.9 6.8-9.2a4.3 4.3 0 1 0-8.3-1.6"/></svg></div>
+          <div class="tilt"><div class="sway"><img src="cutouts/web/half-blush-blue.webp" alt="Blush Blue Floral Half Khimar" loading="eager"></div></div>
+          <div class="gshadow"></div>
+        </div>
+      </div>
+      <div class="pitem" data-i="2" role="button" tabindex="0" aria-label="Sage Ditsy Half Khimar">
+        <div class="slot">
+          <div class="hook"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#5C4632" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 30 V16"/><path d="M15 16c0-4.6 6.8-4.9 6.8-9.2a4.3 4.3 0 1 0-8.3-1.6"/></svg></div>
+          <div class="tilt"><div class="sway"><img src="cutouts/web/half-sage.webp" alt="Sage Ditsy Half Khimar" loading="lazy"></div></div>
+          <div class="gshadow"></div>
+        </div>
+      </div>
+      <div class="pitem" data-i="3" role="button" tabindex="0" aria-label="Ivory Vine Half Khimar">
+        <div class="slot">
+          <div class="hook"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#5C4632" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 30 V16"/><path d="M15 16c0-4.6 6.8-4.9 6.8-9.2a4.3 4.3 0 1 0-8.3-1.6"/></svg></div>
+          <div class="tilt"><div class="sway"><img src="cutouts/web/half-ivory-vine.webp" alt="Ivory Vine Half Khimar" loading="lazy"></div></div>
+          <div class="gshadow"></div>
+        </div>
+      </div>
+      <div class="pitem" data-i="4" role="button" tabindex="0" aria-label="Rose Garden Full Prayer Dress">
+        <div class="slot">
+          <div class="hook"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#5C4632" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 30 V16"/><path d="M15 16c0-4.6 6.8-4.9 6.8-9.2a4.3 4.3 0 1 0-8.3-1.6"/></svg></div>
+          <div class="tilt"><div class="sway"><img src="cutouts/web/full-rose.webp" alt="Rose Garden Full Prayer Dress" loading="lazy"></div></div>
+          <div class="gshadow"></div>
+        </div>
+      </div>
+      <div class="pitem" data-i="5" role="button" tabindex="0" aria-label="Blue Ditsy Full Prayer Dress">
+        <div class="slot">
+          <div class="hook"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#5C4632" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 30 V16"/><path d="M15 16c0-4.6 6.8-4.9 6.8-9.2a4.3 4.3 0 1 0-8.3-1.6"/></svg></div>
+          <div class="tilt"><div class="sway"><img src="cutouts/web/full-blue-ditsy.webp" alt="Blue Ditsy Full Prayer Dress" loading="lazy"></div></div>
+          <div class="gshadow"></div>
+        </div>
+      </div>
+      <div class="pitem" data-i="6" role="button" tabindex="0" aria-label="Lavender Bloom Full Prayer Dress">
+        <div class="slot">
+          <div class="hook"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#5C4632" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 30 V16"/><path d="M15 16c0-4.6 6.8-4.9 6.8-9.2a4.3 4.3 0 1 0-8.3-1.6"/></svg></div>
+          <div class="tilt"><div class="sway"><img src="cutouts/web/full-lavender.webp" alt="Lavender Bloom Full Prayer Dress" loading="lazy"></div></div>
+          <div class="gshadow"></div>
+        </div>
+      </div>
+      <div class="pitem" data-i="7" role="button" tabindex="0" aria-label="Leopard Grace Full Prayer Dress">
+        <div class="slot">
+          <div class="hook"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#5C4632" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 30 V16"/><path d="M15 16c0-4.6 6.8-4.9 6.8-9.2a4.3 4.3 0 1 0-8.3-1.6"/></svg></div>
+          <div class="tilt"><div class="sway"><img src="cutouts/web/full-leopard.webp" alt="Leopard Grace Full Prayer Dress" loading="lazy"></div></div>
+          <div class="gshadow"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="caption" id="caption">
+      <div class="c-name" id="cName">Leopard Grace Half Khimar</div>
+      <div class="c-type" id="cType">Half Khimar — ₹499</div>
+      <a class="c-btn" id="cBtn" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Leopard%20Grace%20Half%20Khimar%20(Rs.%20499)" target="_blank" rel="noopener">Order on WhatsApp</a>
+    </div>
+
+    <div class="details" id="details">
+      <div class="d-eyebrow">Full Prayer Dress — ₹999</div>
+      <div class="d-name">Leopard Grace Full Prayer Dress</div>
+      <p class="d-feats">Soft &amp; breathable fabric • Elegant lace border • Elastic sleeves</p>
+      <div class="d-actions">
+        <a class="btn-wa" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Leopard%20Grace%20Full%20Prayer%20Dress%20(Rs.%20999)" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.4 15.1L2 22l5.1-1.6A9.94 9.94 0 1 0 12.04 2Zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3 .95.97-2.9-.2-.3A8.1 8.1 0 0 1 12.04 3.8Zm-3.3 3.9c-.16 0-.4.06-.61.3-.2.25-.77.76-.77 1.85 0 1.1.8 2.16.91 2.3.12.15 1.55 2.5 3.85 3.4 2.3.9 2.3.6 2.72.56.41-.05 1.34-.55 1.53-1.08.19-.53.19-.98.13-1.08-.06-.1-.22-.16-.46-.28l-1.6-.79c-.21-.1-.37-.16-.53.11-.16.26-.62.76-.76.94-.14.18-.28.2-.52.07-.24-.13-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.01-.37.11-.49.1-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.17.04-.31-.02-.43-.06-.13-.55-1.33-.76-1.83-.2-.48-.4-.42-.55-.43Z"/></svg>
+          Order on WhatsApp</a>
+        <a class="dm-link" href="https://www.instagram.com/the_khimar_collection" target="_blank" rel="noopener">or DM us on Instagram</a>
+      </div>
+    </div>
+
+    <div class="scroll-hint" id="scrollHint">
+      <span class="sh-txt">Scroll</span>
+      <span class="sh-line"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FIXED BOTTOM STRIP ================= -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span>The Khimar Collection ✦ Premium Prayer Wear ✦ Comfort ✦ Elegance ✦ Modesty ✦&nbsp;</span>
+    <span>The Khimar Collection ✦ Premium Prayer Wear ✦ Comfort ✦ Elegance ✦ Modesty ✦&nbsp;</span>
+    <span>The Khimar Collection ✦ Premium Prayer Wear ✦ Comfort ✦ Elegance ✦ Modesty ✦&nbsp;</span>
+    <span>The Khimar Collection ✦ Premium Prayer Wear ✦ Comfort ✦ Elegance ✦ Modesty ✦&nbsp;</span>
+    <span>The Khimar Collection ✦ Premium Prayer Wear ✦ Comfort ✦ Elegance ✦ Modesty ✦&nbsp;</span>
+    <span>The Khimar Collection ✦ Premium Prayer Wear ✦ Comfort ✦ Elegance ✦ Modesty ✦&nbsp;</span>
+    <span>The Khimar Collection ✦ Premium Prayer Wear ✦ Comfort ✦ Elegance ✦ Modesty ✦&nbsp;</span>
+    <span>The Khimar Collection ✦ Premium Prayer Wear ✦ Comfort ✦ Elegance ✦ Modesty ✦&nbsp;</span>
+  </div>
+</div>
+
+<!-- ================= SHOP BY COLLECTION ================= -->
+<section class="below" id="shop">
+  <div class="wrap">
+    <p class="kicker rv">Shop by Collection</p>
+    <h2 class="rv">Every design, <em>one gentle price</em></h2>
+    <p class="lede rv">Tap a design to see it on the rail above, or order it directly — your message is already written for you.</p>
+    <div class="rule rv"></div>
+    <div class="shop-panels">
+      <div class="shop-panel rv">
+        <h3>Half Khimar</h3>
+        <p class="sp-price">₹499 each</p>
+        <div class="shop-row">
+          <img class="sr-thumb" src="cutouts/web/half-leopard.webp" alt="" loading="lazy" aria-hidden="true">
+          <button class="sr-name" data-goto="0" type="button">Leopard Grace Half Khimar</button>
+          <span class="sr-right"><span class="sr-price">₹499</span><a class="sr-order" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Leopard%20Grace%20Half%20Khimar%20(Rs.%20499)" target="_blank" rel="noopener">Order</a></span>
+        </div>
+        <div class="shop-row">
+          <img class="sr-thumb" src="cutouts/web/half-blush-blue.webp" alt="" loading="lazy" aria-hidden="true">
+          <button class="sr-name" data-goto="1" type="button">Blush Blue Floral Half Khimar</button>
+          <span class="sr-right"><span class="sr-price">₹499</span><a class="sr-order" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Blush%20Blue%20Floral%20Half%20Khimar%20(Rs.%20499)" target="_blank" rel="noopener">Order</a></span>
+        </div>
+        <div class="shop-row">
+          <img class="sr-thumb" src="cutouts/web/half-sage.webp" alt="" loading="lazy" aria-hidden="true">
+          <button class="sr-name" data-goto="2" type="button">Sage Ditsy Half Khimar</button>
+          <span class="sr-right"><span class="sr-price">₹499</span><a class="sr-order" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Sage%20Ditsy%20Half%20Khimar%20(Rs.%20499)" target="_blank" rel="noopener">Order</a></span>
+        </div>
+        <div class="shop-row">
+          <img class="sr-thumb" src="cutouts/web/half-ivory-vine.webp" alt="" loading="lazy" aria-hidden="true">
+          <button class="sr-name" data-goto="3" type="button">Ivory Vine Half Khimar</button>
+          <span class="sr-right"><span class="sr-price">₹499</span><a class="sr-order" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Ivory%20Vine%20Half%20Khimar%20(Rs.%20499)" target="_blank" rel="noopener">Order</a></span>
+        </div>
+      </div>
+      <div class="shop-panel rv">
+        <h3>Full Prayer Dress</h3>
+        <p class="sp-price">₹999 each</p>
+        <div class="shop-row">
+          <img class="sr-thumb" src="cutouts/web/full-rose.webp" alt="" loading="lazy" aria-hidden="true">
+          <button class="sr-name" data-goto="4" type="button">Rose Garden Full Prayer Dress</button>
+          <span class="sr-right"><span class="sr-price">₹999</span><a class="sr-order" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Rose%20Garden%20Full%20Prayer%20Dress%20(Rs.%20999)" target="_blank" rel="noopener">Order</a></span>
+        </div>
+        <div class="shop-row">
+          <img class="sr-thumb" src="cutouts/web/full-blue-ditsy.webp" alt="" loading="lazy" aria-hidden="true">
+          <button class="sr-name" data-goto="5" type="button">Blue Ditsy Full Prayer Dress</button>
+          <span class="sr-right"><span class="sr-price">₹999</span><a class="sr-order" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Blue%20Ditsy%20Full%20Prayer%20Dress%20(Rs.%20999)" target="_blank" rel="noopener">Order</a></span>
+        </div>
+        <div class="shop-row">
+          <img class="sr-thumb" src="cutouts/web/full-lavender.webp" alt="" loading="lazy" aria-hidden="true">
+          <button class="sr-name" data-goto="6" type="button">Lavender Bloom Full Prayer Dress</button>
+          <span class="sr-right"><span class="sr-price">₹999</span><a class="sr-order" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Lavender%20Bloom%20Full%20Prayer%20Dress%20(Rs.%20999)" target="_blank" rel="noopener">Order</a></span>
+        </div>
+        <div class="shop-row">
+          <img class="sr-thumb" src="cutouts/web/full-leopard.webp" alt="" loading="lazy" aria-hidden="true">
+          <button class="sr-name" data-goto="7" type="button">Leopard Grace Full Prayer Dress</button>
+          <span class="sr-right"><span class="sr-price">₹999</span><a class="sr-order" href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Leopard%20Grace%20Full%20Prayer%20Dress%20(Rs.%20999)" target="_blank" rel="noopener">Order</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY YOU'LL LOVE IT ================= -->
+<section class="below why" id="why">
+  <div class="wrap">
+    <p class="kicker rv">Why Us</p>
+    <h2 class="rv">Why you'll <em>love it</em></h2>
+    <div class="rule rv"></div>
+    <div class="feats">
+      <div class="feat rv">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 3.8a6.5 6.5 0 0 0-8.4 8.4L3 21l1.5.3L21 4.9a.6.6 0 0 0-.8-1.1Z"/><path d="M16 8 2.5 21.5"/><path d="M17.5 15H9"/></svg></div>
+        <h4>Lightweight</h4>
+        <p>Feels light, all day — premium fabric that is easy to wear, every day.</p>
+      </div>
+      <div class="feat rv">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h9.5a2.5 2.5 0 1 0-2.5-2.5"/><path d="M2 12h13.5a2.5 2.5 0 1 1-2.5 2.5"/><path d="M3 16h7a2 2 0 1 1-2 2"/></svg></div>
+        <h4>Breathable</h4>
+        <p>Soft &amp; breathable fabric that keeps you cool and comfortable in prayer.</p>
+      </div>
+      <div class="feat rv">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4.2 0-7.5-2.8-7.5-6.6 2.4.3 4.5 1.4 5.9 3.2C10 14.7 10.7 11.2 12 8.6c1.3 2.6 2 6.1 1.6 9 1.4-1.8 3.5-2.9 5.9-3.2C19.5 18.2 16.2 21 12 21Z"/></svg></div>
+        <h4>Modest Design</h4>
+        <p>A modest design with full coverage &amp; comfort, finished with elegant lace.</p>
+      </div>
+      <div class="feat rv">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10l4 6-9 12L3 9l4-6Z"/><path d="M3 9h18M9.5 3 8 9l4 12M14.5 3 16 9l-4 12"/></svg></div>
+        <h4>Premium Quality</h4>
+        <p>Neat stitching and durable finishing — premium quality, made to last.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STORY ================= -->
+<section class="below story">
+  <div class="wrap">
+    <svg class="story-lotus rv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20c-4 0-7-2.6-7-6.2 2.3.3 4.2 1.3 5.5 3C10.2 14 10.8 11 12 8.6c1.2 2.4 1.8 5.4 1.5 8.2 1.3-1.7 3.2-2.7 5.5-3C19 17.4 16 20 12 20Z"/></svg>
+    <p class="big rv">“Your Prayer, <b>Our Priority</b>.”</p>
+    <p class="rv">Every piece in this collection is chosen with care — soft fabric that breathes, stitching that lasts, and a drape that lets you stand in prayer with complete peace of mind. Nothing more, nothing less than prayer wear made to be loved daily.</p>
+  </div>
+</section>
+
+<!-- ================= HOW TO ORDER ================= -->
+<section class="below" id="order" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker rv">Order</p>
+    <h2 class="rv">Ordering is <em>simple</em></h2>
+    <div class="rule rv"></div>
+    <div class="steps">
+      <div class="step rv">
+        <div class="step-num">01</div>
+        <h4>Pick your design</h4>
+        <p>Scroll the rail above and choose the khimar or prayer dress you love.</p>
+      </div>
+      <div class="step rv">
+        <div class="step-num">02</div>
+        <h4>Order on WhatsApp or DM</h4>
+        <p>Tap Order on WhatsApp on the product, or <a href="https://www.instagram.com/the_khimar_collection" target="_blank" rel="noopener">DM us on Instagram</a> — your message is already written for you.</p>
+      </div>
+      <div class="step rv">
+        <div class="step-num">03</div>
+        <h4>We confirm your order</h4>
+        <p>We reply, confirm your order with you personally, and take it from there.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSTAGRAM ================= -->
+<section class="below ig-band">
+  <div class="wrap">
+    <p class="kicker rv">Follow Our Journey</p>
+    <h2 class="rv">New prints, <em>first on Instagram</em></h2>
+    <p class="lede rv">See every new design as it arrives, and say salaam — we would love to meet you there.</p>
+    <p class="ig-handle rv" style="margin-top:22px">@the_khimar_collection</p>
+    <a class="btn-dark rv" href="https://www.instagram.com/the_khimar_collection" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+      Follow on Instagram</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="foot-grid">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#A98548" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20c-4 0-7-2.6-7-6.2 2.3.3 4.2 1.3 5.5 3C10.2 14 10.8 11 12 8.6c1.2 2.4 1.8 5.4 1.5 8.2 1.3-1.7 3.2-2.7 5.5-3C19 17.4 16 20 12 20Z"/><path d="M12 20v3M5 23h14" stroke-width="1.1"/></svg>
+        <span>The Khimar Collection</span>
+      </div>
+      <p class="foot-tag">Comfort • Elegance • Modesty</p>
+      <p style="margin-top:12px">Premium prayer wear — half khimars and full prayer dresses in soft, breathable fabric. Your Prayer, Our Priority.</p>
+    </div>
+    <div>
+      <h5>Contact</h5>
+      <ul class="foot-links">
+        <li><a href="tel:+919137362083">Call: +91 91373 62083</a></li>
+        <li><a href="https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20from%20The%20Khimar%20Collection." target="_blank" rel="noopener">WhatsApp: +91 91373 62083</a></li>
+        <li><a href="mailto:thekhimarco@gmail.com">thekhimarco@gmail.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Explore</h5>
+      <ul class="foot-links">
+        <li><a href="#shop">Shop by Collection</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#order">How to Order</a></li>
+        <li><a href="https://www.instagram.com/the_khimar_collection" target="_blank" rel="noopener">Instagram — @the_khimar_collection</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 The Khimar Collection. All rights reserved.</span>
+    <span class="foot-credit">Website by <a href="https://www.instagram.com/abso.graphics" target="_blank" rel="noopener">ABSO Graphics</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var PRODUCTS = [
+    {name:"Leopard Grace Half Khimar",      type:"Half Khimar — ₹499",      asp:0.7297, wa:"https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Leopard%20Grace%20Half%20Khimar%20(Rs.%20499)"},
+    {name:"Blush Blue Floral Half Khimar",  type:"Half Khimar — ₹499",      asp:0.7305, wa:"https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Blush%20Blue%20Floral%20Half%20Khimar%20(Rs.%20499)"},
+    {name:"Sage Ditsy Half Khimar",         type:"Half Khimar — ₹499",      asp:0.7272, wa:"https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Sage%20Ditsy%20Half%20Khimar%20(Rs.%20499)"},
+    {name:"Ivory Vine Half Khimar",         type:"Half Khimar — ₹499",      asp:0.7288, wa:"https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Ivory%20Vine%20Half%20Khimar%20(Rs.%20499)"},
+    {name:"Rose Garden Full Prayer Dress",  type:"Full Prayer Dress — ₹999", asp:0.4422, wa:"https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Rose%20Garden%20Full%20Prayer%20Dress%20(Rs.%20999)"},
+    {name:"Blue Ditsy Full Prayer Dress",   type:"Full Prayer Dress — ₹999", asp:0.3661, wa:"https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Blue%20Ditsy%20Full%20Prayer%20Dress%20(Rs.%20999)"},
+    {name:"Lavender Bloom Full Prayer Dress", type:"Full Prayer Dress — ₹999", asp:0.4520, wa:"https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Lavender%20Bloom%20Full%20Prayer%20Dress%20(Rs.%20999)"},
+    {name:"Leopard Grace Full Prayer Dress", type:"Full Prayer Dress — ₹999", asp:0.4070, wa:"https://wa.me/919137362083?text=Assalamu%20alaikum!%20I%20want%20to%20order%20the%20Leopard%20Grace%20Full%20Prayer%20Dress%20(Rs.%20999)"}
+  ];
+  var N = PRODUCTS.length, LAST = N - 1;
+  var P1_END = 0.7;                       // progress 0–0.70 = rail traverse, 0.70–1 = expansion
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var scrollEl = document.getElementById("stageScroll");
+  var stage    = document.getElementById("stage");
+  var rail     = document.getElementById("rail");
+  var caption  = document.getElementById("caption");
+  var cName    = document.getElementById("cName");
+  var cType    = document.getElementById("cType");
+  var cBtn     = document.getElementById("cBtn");
+  var details  = document.getElementById("details");
+  var hint     = document.getElementById("scrollHint");
+  var items    = Array.prototype.slice.call(document.querySelectorAll(".pitem"));
+  var slots    = items.map(function(el){ return el.querySelector(".slot"); });
+  var tilts    = items.map(function(el){ return el.querySelector(".tilt"); });
+  var shadows  = items.map(function(el){ return el.querySelector(".gshadow"); });
+  var hooks    = items.map(function(el){ return el.querySelector(".hook"); });
+
+  /* ---------- metrics (recomputed on resize) ---------- */
+  var W=0, H=0, RAIL_Y=0, BH=0, ITEM_H=0, SPACING=0, SEXP=0, CX_T=0, TY_T=0, SCROLLABLE=0;
+  var IW = new Array(N).fill(0);          // per-item garment widths (cut-out aspects differ)
+  var HOOK_H = 30;
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+  function lerp(a,b,t){ return a+(b-a)*t; }
+  function smooth(t){ return t*t*(3-2*t); }
+
+  function applyMetrics(){
+    W = stage.clientWidth; H = stage.clientHeight;
+    var compact = W < 640, wide = W > 820;
+    RAIL_Y = Math.round(H * (compact ? 0.115 : 0.14));
+    BH = clamp(H * (compact ? 0.37 : 0.43), 225, 500);
+    var maxW = 0;
+    for (var i = 0; i < N; i++){ IW[i] = BH * PRODUCTS[i].asp; if (IW[i] > maxW) maxW = IW[i]; }
+    ITEM_H = HOOK_H + BH;
+    SPACING = maxW * 1.12 + 18;
+    var capW = wide ? W * 0.58 : W * 0.94;
+    SEXP = Math.min(0.86 * H / BH, capW / IW[LAST]);
+    CX_T = wide ? W * 0.35 : W / 2;
+    TY_T = clamp((H - 58) - (RAIL_Y + SEXP * ITEM_H), 8 - RAIL_Y, 0);
+    SCROLLABLE = scrollEl.offsetHeight - H;
+    rail.style.top = RAIL_Y + "px";
+    caption.style.top = (RAIL_Y + ITEM_H + 22) + "px";
+    items.forEach(function(el, i){
+      el.style.width = IW[i] + "px";
+      el.style.height = ITEM_H + "px";
+      slots[i].style.width = IW[i] + "px";
+      tilts[i].style.height = BH + "px";
+    });
+  }
+
+  /* ---------- scroll → targets ---------- */
+  var tF = 0, tU = 0, tP = 0;             // targets: float index, expansion, raw progress
+  function computeTargets(){
+    var rect = scrollEl.getBoundingClientRect();
+    var p = SCROLLABLE > 0 ? clamp(-rect.top / SCROLLABLE, 0, 1) : 0;
+    tP = p;
+    tF = (Math.min(p, P1_END) / P1_END) * LAST;
+    tU = clamp((p - P1_END) / (1 - P1_END), 0, 1);
+  }
+  function yFor(p){
+    var absTop = scrollEl.getBoundingClientRect().top + window.scrollY;
+    return absTop + p * SCROLLABLE;
+  }
+  function goTo(p){
+    window.scrollTo({ top: yFor(p), behavior: reduced ? "auto" : "smooth" });
+  }
+  function centreP(i){ return (i / LAST) * P1_END; }
+
+  items.forEach(function(el){
+    var i = parseInt(el.getAttribute("data-i"), 10);
+    function act(){
+      if (Math.round(tF) === i && tU < 0.05) { goTo(0.92); }   // centred → expansion phase
+      else { goTo(centreP(i)); }                               // otherwise → centre it
+    }
+    el.addEventListener("click", act);
+    el.addEventListener("keydown", function(ev){
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); act(); }
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-goto]"), function(btn){
+    btn.addEventListener("click", function(){
+      goTo(centreP(parseInt(btn.getAttribute("data-goto"), 10)));
+    });
+  });
+
+  /* ---------- render ---------- */
+  var cF = 0, cU = 0, lastAi = -1;
+  var dsBucket = new Array(N).fill(-1);   // last drop-shadow bucket per item (quantized focus)
+  function render(f, u, now){
+    var e = smooth(clamp(u, 0, 1));       // eased expansion amount
+    var ttBase = reduced ? 0 : Math.sin(now * (Math.PI * 2 / 10000));  // 10s turntable cycle
+    rail.style.opacity = (0.5 * (1 - 0.5 * e)).toFixed(3);
+    for (var i = 0; i < N; i++){
+      var el = items[i];
+      var d = i - f, ad = Math.abs(d);
+      var prox = smooth(clamp(1 - ad / 1.7, 0, 1));
+      var s = 0.72 + 0.28 * prox;
+      var blur = 3 * (1 - prox);
+      var x = W / 2 + d * SPACING, ty = 0, op = 1;
+      if (u > 0.001){
+        if (i === LAST){
+          x = lerp(x, CX_T, e);
+          s = lerp(s, SEXP, e);
+          ty = lerp(0, TY_T, e);
+          blur = blur * (1 - e);
+        } else {
+          var dir = i < LAST ? -1 : 1;
+          x += dir * W * 0.85 * e;
+          s = s * (1 - 0.15 * e);
+          blur = blur + 6 * e;
+          op = 1 - e;
+        }
+      }
+      /* .slot — JS translate + scale + focus blur */
+      slots[i].style.transform = "translate3d(" + (x - IW[i] / 2).toFixed(1) + "px," + (RAIL_Y + ty).toFixed(1) + "px,0) scale(" + s.toFixed(4) + ")";
+      slots[i].style.filter = blur > 0.05 ? "blur(" + blur.toFixed(2) + "px)" : "none";
+      /* .tilt — 3D rotateY from centre distance + turntable oscillation near centre */
+      var ry = clamp(d, -1.6, 1.6) * -16;
+      var wTurn = smooth(clamp(1 - ad / 0.3, 0, 1));
+      ry += 13 * ttBase * wTurn;
+      tilts[i].style.transform = "rotateY(" + ry.toFixed(2) + "deg)";
+      /* silhouette drop-shadow on .tilt — updated only when quantized focus changes */
+      var bucket = Math.round(prox * 12);
+      if (bucket !== dsBucket[i]){
+        dsBucket[i] = bucket;
+        var fq = bucket / 12;
+        tilts[i].style.filter = "drop-shadow(0 " + Math.round(10 + 9 * fq) + "px " + Math.round(14 + 12 * fq) + "px rgba(59,42,28," + (0.13 + 0.14 * fq).toFixed(3) + "))";
+      }
+      /* ground shadow — scales/fades with focus, expands + softens in expansion */
+      var shOp = (0.14 + 0.52 * prox) * op;
+      var shSx = 0.8 + 0.32 * prox;
+      if (i === LAST){ shOp *= (1 - 0.3 * e); shSx += 0.9 * e; }
+      shadows[i].style.opacity = shOp.toFixed(3);
+      shadows[i].style.transform = "translateX(-50%) scaleX(" + shSx.toFixed(3) + ")";
+      /* .pitem wrapper — fade / stacking / clicks */
+      el.style.opacity = op.toFixed(3);
+      el.style.zIndex = (i === LAST && u > 0.001) ? 90 : String(50 - Math.round(ad * 5));
+      el.style.pointerEvents = op < 0.05 ? "none" : "auto";
+      hooks[i].style.opacity = (i === LAST) ? (1 - e).toFixed(3) : "1";
+    }
+    /* caption follows the centred product, crossfading as focus shifts */
+    var ai = clamp(Math.round(f), 0, LAST);
+    if (ai !== lastAi){
+      lastAi = ai;
+      cName.textContent = PRODUCTS[ai].name;
+      cType.textContent = PRODUCTS[ai].type;
+      cBtn.setAttribute("href", PRODUCTS[ai].wa);
+    }
+    var focus = clamp(1.2 - Math.abs(ai - f) * 1.7, 0, 1);
+    var capOp = focus * (1 - e);
+    caption.style.opacity = capOp.toFixed(3);
+    caption.style.setProperty("--cy", ((1 - focus) * 8).toFixed(1) + "px");
+    caption.style.pointerEvents = capOp > 0.35 ? "auto" : "none";
+    /* expansion details cluster (final centred product) */
+    details.style.opacity = e.toFixed(3);
+    details.style.setProperty("--dy", ((1 - e) * 16).toFixed(1) + "px");
+    details.style.pointerEvents = e > 0.55 ? "auto" : "none";
+    /* scroll hint only at the very start */
+    hint.style.opacity = clamp(1 - tP * 22, 0, 1).toFixed(3);
+  }
+
+  /* ---------- rAF loop with lerp smoothing ---------- */
+  var lastT = 0;
+  function loop(ts){
+    var dt = lastT ? Math.min((ts - lastT) / 1000, 0.05) : 0.016;
+    lastT = ts;
+    computeTargets();
+    var k = reduced ? 1 : 1 - Math.exp(-dt / 0.085);
+    cF += (tF - cF) * k; if (Math.abs(tF - cF) < 0.0004) cF = tF;
+    cU += (tU - cU) * k; if (Math.abs(tU - cU) < 0.0004) cU = tU;
+    render(cF, cU, ts);
+    requestAnimationFrame(loop);
+  }
+
+  applyMetrics();
+  computeTargets();
+  cF = tF; cU = tU;                        // snap on load — no glide if reloaded mid-scroll
+  render(cF, cU, performance.now());
+  requestAnimationFrame(loop);
+  window.addEventListener("resize", function(){ applyMetrics(); computeTargets(); render(cF, cU, performance.now()); });
+  window.addEventListener("orientationchange", function(){ setTimeout(function(){ applyMetrics(); computeTargets(); render(cF, cU, performance.now()); }, 60); });
+
+  /* ---------- below-stage reveals ---------- */
+  var els = document.querySelectorAll(".rv");
+  if (!("IntersectionObserver" in window) || reduced) {
+    els.forEach(function(el){ el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    els.forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
